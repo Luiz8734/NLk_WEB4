@@ -218,3 +218,21 @@ window.onload = (function(oldLoad){
         }
     }
 })(window.onload);
+
+document.getElementById("player-list").addEventListener("click", function(event) {
+    const favBtn = event.target.closest(".favorite-button");
+    if (favBtn) {
+        const id = parseInt(favBtn.dataset.id);
+        let players = JSON.parse(localStorage.getItem("players")) || [];
+
+        players = players.map(player => {
+            if (player.id === id) {
+                player.favorita = !player.favorita; // alterna true/false
+            }
+            return player;
+        });
+
+        localStorage.setItem("players", JSON.stringify(players));
+        displayPlayers(); // recarrega com ícone atualizado
+    }
+});
